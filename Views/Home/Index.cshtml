@@ -1,0 +1,37 @@
+﻿@model List<ImageGalleryApp.Models.ImageModel>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Gallery</title>
+    <link rel="stylesheet" href="~/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Image Gallery</h1>
+        <div class="gallery">
+            @foreach (var image in Model)
+            {
+                <div class="image-frame">
+                    <a href="~/uploads/@image.FileName" target="_blank">
+                        <img src="~/uploads/@image.FileName" alt="@image.Description">
+                    </a>
+                    <p>@image.Description</p>
+                </div>
+            }
+        </div>
+        <form asp-action="Upload" method="post" enctype="multipart/form-data" class="upload-form">
+            <label for="file-upload" class="upload-btn">Upload Image</label>
+            <input type="file" id="file-upload" name="file" onchange="this.form.submit();" hidden>
+        </form>
+    </div>
+
+    <script>
+        document.querySelectorAll('.image-frame img').forEach(img => {
+            img.onclick = () => img.classList.toggle('zoom');
+        });
+    </script>
+</body>
+</html>
